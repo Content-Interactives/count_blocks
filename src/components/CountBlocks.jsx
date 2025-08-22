@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { Container } from './ui/reused-ui/Container.jsx'
+import { OneBlock, TenBlock, HundredBlock } from './Blocks'
 
 const CountBlocks = () => {
 
@@ -17,7 +18,12 @@ const CountBlocks = () => {
                 Count the blocks in each row to find the total!
             </div>
 
-            
+            {/* Blocks */}
+            <div className='flex flex-wrap justify-center items-center'>
+                <OneBlock />
+                <TenBlock />
+                <HundredBlock />
+            </div>
         </Container>
 )
 };
