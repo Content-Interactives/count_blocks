@@ -1,176 +1,111 @@
 import React from 'react';
+import './Blocks.css';
 
-// Single unit cube
-export const OneBlock = ({ size = 20, color = '#4a90e2' }) => {
+const size = 12;
+
+// Single unit cube; adjustable via CSS variables
+export const OneBlock = ({ color = '#0290ee', count = 1, border = 1 }) => {
+  const wrapperClass = count > 1 ? 'blocks-column' : 'blocks-row';
   return (
-    <div 
-      className="one-block"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        backgroundColor: color,
-        border: '1px solid rgba(0,0,0,0.2)',
-        display: 'inline-block',
-        position: 'relative',
-        marginRight: `${size * 0.3}px`,
-        marginTop: `${size * 0.3}px`
-      }}
-    >
-      {/* Top face */}
-      <div style={{
-        position: 'absolute',
-        top: `-${size * 0.35}px`,
-        left: '-1px',
-        width: `${size}px`,
-        height: `${size * 0.3}px`,
-        backgroundColor: color,
-        border: '1px solid rgba(0,0,0,0.2)',
-        transform: 'skewX(-45deg)',
-        transformOrigin: 'bottom left',
-        filter: 'brightness(1.2)'
-      }} />
-      {/* Right face */}
-      <div style={{
-        position: 'absolute',
-        top: '-1.1px',
-        right: `-${size * 0.35}px`,
-        width: `${size * 0.3}px`,
-        height: `${size}px`,
-        backgroundColor: color,
-        border: '1px solid rgba(0,0,0,0.2)',
-        transform: 'skewY(-45deg)',
-        transformOrigin: 'bottom left',
-        filter: 'brightness(0.8)'
-      }} />
-    </div>
-  );
-};
-
-// Rod of 10 unit cubes
-export const TenBlock = ({ size = 20, color = '#e74c3c' }) => {
-  const cubes = Array.from({ length: 10 }, (_, i) => (
-    <div
-      key={i}
-      className="cube-in-rod"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        backgroundColor: color,
-        border: '1px solid rgba(0,0,0,0.2)',
-        display: 'block',
-        position: 'relative'
-      }}
-    >
-      {/* Top face - only on the top cube (first cube) */}
-      {i === 0 && (
-        <div style={{
-          position: 'absolute',
-          top: `-${size * 0.35}px`,
-          left: '-1px',
-          width: `${size}px`,
-          height: `${size * 0.3}px`,
-          backgroundColor: color,
-          border: '1px solid rgba(0,0,0,0.2)',
-          transform: 'skewX(-45deg)',
-          transformOrigin: 'bottom left',
-          filter: 'brightness(1.2)'
-        }} />
-      )}
-      {/* Right face - on all cubes */}
-      <div style={{
-        position: 'absolute',
-        top: '-1.1px',
-        right: `-${size * 0.35}px`,
-        width: `${size * 0.3}px`,
-        height: `${size}px`,
-        backgroundColor: color,
-        border: '1px solid rgba(0,0,0,0.2)',
-        transform: 'skewY(-45deg)',
-        transformOrigin: 'bottom left',
-        filter: 'brightness(0.8)'
-      }} />
-    </div>
-  ));
-
-  return (
-    <div 
-      className="ten-block"
-      style={{
-        display: 'inline-block',
-        position: 'relative',
-        marginRight: `${size * 0.3}px`,
-        marginTop: `${size * 0.3}px`
-      }}
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {cubes}
-      </div>
-    </div>
-  );
-};
-
-// Flat square of 100 unit cubes (10x10)
-export const HundredBlock = ({ size = 20, color = '#27ae60' }) => {
-  const rows = Array.from({ length: 10 }, (_, rowIndex) => (
-    <div key={rowIndex} style={{ display: 'flex' }}>
-      {Array.from({ length: 10 }, (_, colIndex) => (
+    <div className={`${wrapperClass} mr-2 z-3 one-group`} style={{ '--size': `${size}px`, '--color': color }}>
+      {Array.from({ length: count }, (_, idx) => (
         <div
-          key={colIndex}
-          className="cube-in-hundred"
+          key={idx}
+          className="one-block mb-1"
           style={{
-            width: `${size}px`,
-            height: `${size}px`,
-            backgroundColor: color,
-            border: '1px solid rgba(0,0,0,0.2)',
-            position: 'relative'
+            '--size': `${size}px`,
+            '--color': color,
+            '--border': `${border}px`,
+            '--border-radius': `${0.5}px`,
+            '--z': 100 - idx,
+            ...(count > 1
+              ? { '--margin-top': '0px', '--margin-right': '0px' }
+              : { '--margin-top': '2px', '--margin-right': '20px' }),
           }}
         >
-          {/* Top face - only on top row */}
-          {rowIndex === 0 && (
-            <div style={{
-              position: 'absolute',
-              top: `-${size * 0.35}px`,
-              left: '-1px',
-              width: `${size}px`,
-              height: `${size * 0.3}px`,
-              backgroundColor: color,
-              border: '1px solid rgba(0,0,0,0.2)',
-              transform: 'skewX(-45deg)',
-              transformOrigin: 'bottom left',
-              filter: 'brightness(1.2)'
-            }} />
-          )}
-          {/* Right face - only on rightmost column */}
-          {colIndex === 9 && (
-            <div style={{
-              position: 'absolute',
-              top: '-1.1px',
-              right: `-${size * 0.35}px`,
-              width: `${size * 0.3}px`,
-              height: `${size}px`,
-              backgroundColor: color,
-              border: '1px solid rgba(0,0,0,0.2)',
-              transform: 'skewY(-45deg)',
-              transformOrigin: 'bottom left',
-              filter: 'brightness(0.8)'
-            }} />
-          )}
+          {null}
         </div>
       ))}
     </div>
-  ));
+  );
+};
 
+// Column of ten unit cubes; zero spacing between cubes
+export const TenBlock = ({ color = '#ee021a', border = 1, count = 1 }) => {
   return (
-    <div 
-      className="hundred-block"
-      style={{
-        display: 'inline-block',
-        position: 'relative',
-        marginRight: `${size * 3}px`,
-        marginTop: `${size * 0.3}px`
-      }}
-    >
-      {rows}
+    <div className="blocks-row blocks-row--nowrap z-2">
+      {Array.from({ length: count }, (_, col) => (
+        <div
+          key={col}
+          className="blocks-column mr-1 ten-column"
+          style={{ '--size': `${size}px`, '--color': color }}
+        >
+          {Array.from({ length: 10 }, (_, row) => (
+            <div
+              key={row}
+              className="one-block"
+              style={{
+                '--size': `${size}px`,
+                '--color': color,
+                '--border': `${border}px`,
+                '--border-radius': `${0.5}px`,
+                '--z': 100 - row,
+                '--margin-top': '0px',
+                '--margin-right': '0px',
+              }}
+            >
+              {null}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// 10x10 grid of unit cubes; zero spacing; composed of 10 TenBlocks side by side
+export const HundredBlock = ({ color = '#00cd00', border = 1, count = 1 }) => {
+  const layerOffsetX = Math.round(size * 0.5); // shift right per layer
+  const layerOffsetY = Math.round(size * -0.5); // shift up per layer
+  return (
+    <div className="hundreds-stack">
+      {Array.from({ length: count }, (_, layerIdx) => (
+        <div
+          key={layerIdx}
+          className={layerIdx === 0 ? 'hundred-layer hundred-layer--base' : 'hundred-layer'}
+          style={{
+            '--dx': `${layerIdx * layerOffsetX}px`,
+            '--dy': `${layerIdx * layerOffsetY}px`,
+            zIndex: 1000 - layerIdx,
+            '--size': `${size}px`,
+            '--color': color,
+          }}
+        >
+          <div className="blocks-grid">
+            {Array.from({ length: 10 }, (_, rowIdx) => (
+              <div key={rowIdx} className="blocks-row blocks-row--nowrap">
+                {Array.from({ length: 10 }, (_, colIdx) => (
+                  <div
+                    key={colIdx}
+                    className="one-block"
+                    style={{
+                      '--size': `${size}px`,
+                      '--color': color,
+                      '--border': `${border}px`,
+                      '--border-radius': `${0.5}px`,
+                      '--z': `${(9 - rowIdx) * 10 + colIdx}`,
+                      '--margin-top': '0px',
+                      '--margin-right': '0px',
+                    }}
+                  >
+                    {null}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

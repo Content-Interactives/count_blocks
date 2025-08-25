@@ -19,10 +19,10 @@ const CountBlocks = () => {
             </div>
 
             {/* Blocks */}
-            <div className='flex flex-wrap justify-center items-center'>
-                <OneBlock />
-                <TenBlock />
-                <HundredBlock />
+            <div className='flex flex-wrap justify-between items-center p-5 pb-0'>
+                <HundredBlock count={9} />
+                <TenBlock count={9} />
+                <OneBlock count={9} />
             </div>
         </Container>
 )

@@ -1,0 +1,113 @@
+/* CSS variables-driven isometric cube */
+
+.blocks-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.blocks-column {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.blocks-grid {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.blocks-row--nowrap {
+  flex-wrap: nowrap;
+}
+
+/* Stacking multiple 100-block grids */
+.hundreds-stack {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.hundred-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(var(--dx, 0px), var(--dy, 0px));
+}
+
+.hundred-layer--base {
+  position: relative;
+}
+
+/* OneBlock: remove hover highlighting */
+.one-group { position: relative; }
+
+.one-block {
+  position: relative;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  margin-right: var(--margin-right, 20px);
+  margin-top: var(--margin-top, 2px);
+  background: var(--color);
+  border: var(--border) solid #000;
+  box-sizing: border-box;
+  z-index: var(--z);
+  border-radius: var(--border-radius);
+  /* no hover cursor/transition */
+}
+
+/* No per-block glow; group-level only */
+
+/* TenBlock: hover a column to glow all its blocks */
+.ten-column { position: relative; }
+
+/* HundredBlock: hover a stack layer to glow all its blocks */
+/* hundred-layer: no hover overlay */
+
+/* geometry helpers */
+:root {
+  --iso-top-depth: 0.35; /* fraction of size */
+  --iso-right-width: 0.35; /* fraction of size */
+  /* fine-tune alignment as fractions of size (negative moves up/left) */
+  --top-left-adjust: -0.02;    /* shift the top face slightly left */
+  --right-top-adjust: -0.0375; /* lift the right face slightly up */
+}
+
+/* render faces using pseudo-elements to reduce DOM */
+.one-block::before,
+.one-block::after {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+  background: var(--color);
+  border: var(--border) solid #000;
+  border-radius: var(--border-radius);
+  pointer-events: none;
+}
+
+/* Top face: sits above, skewed on X */
+.one-block::before {
+  /* top face */
+  left: calc(var(--border) * -1.05 + var(--size) * var(--top-left-adjust));
+  width: var(--size);
+  height: calc(var(--size) * var(--iso-top-depth));
+  top: calc(var(--size) * var(--iso-top-depth) * -1.05);
+  transform: skewX(-45deg);
+  transform-origin: bottom left;
+  filter: brightness(1.15);
+}
+
+/* Right face: sits to the right, skewed on Y */
+.one-block::after {
+  /* right face */
+  top: calc(var(--size) * var(--right-top-adjust) * 1.65);
+  right: calc(var(--size) * var(--iso-right-width) * -1.07);
+  width: calc(var(--size) * var(--iso-right-width));
+  height: var(--size);
+  transform: skewY(-45deg);
+  transform-origin: bottom left;
+  filter: brightness(0.85);
+}
+
