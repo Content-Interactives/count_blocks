@@ -95,7 +95,7 @@ const CountBlocks = () => {
             </div>
 
             {/* Blocks */}
-            <div className='flex flex-wrap justify-between items-center p-5 pb-0'>
+            <div className='blocks-responsive flex flex-wrap justify-between items-center p-5 pb-0'>
                 <HundredBlock count={answerHundreds} />
                 <TenBlock count={answerTens} />
                 <OneBlock count={answerOnes} />

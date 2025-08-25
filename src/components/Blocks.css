@@ -111,3 +111,11 @@
   filter: brightness(0.85);
 }
 
+/* Responsive scaling for small screens */
+@media (max-width: 460px) {
+  /* Override inline CSS variables by cascading with :where and !important if needed */
+  .blocks-responsive :where(.one-block, .hundred-layer, .ten-column, .blocks-grid, .blocks-row, .blocks-column) {
+    --size: 8px !important; /* from 12px -> 8px */
+  }
+}
+
