@@ -104,7 +104,7 @@ const CountBlocks = () => {
             {/* Inputs */}
             <div className={`absolute bottom-[1%] flex flex-col justify-center items-center w-[100%] gap-4 p-5 pb-2 pt-2 transition-opacity duration-300 ${showResult ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <div className='flex flex-row justify-center items-center gap-4'>
-                    <div className='w-[100%] flex flex-col justify-center items-center gap-2'>
+                    <div className='w-[30%] flex flex-col justify-center items-center gap-2'>
                         <button 
                             className='w-6 h-6 flex items-center justify-center rounded-md bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-300 shadow-sm'
                             onClick={incrementHundreds}
@@ -117,7 +117,7 @@ const CountBlocks = () => {
                             readOnly
                             tabIndex={-1}
                             value={hundreds}
-                            className='w-[90%] md:w-28 lg:w-32 text-center border-2 border-green-400 rounded-lg p-2 focus:outline-none shadow-sm select-none pointer-events-none text-gray-800' 
+                            className='w-[90%] text-center border-2 border-green-400 rounded-lg p-2 focus:outline-none shadow-sm select-none pointer-events-none text-gray-800' 
                             />
                         <button 
                             className='w-6 h-6 flex items-center justify-center rounded-md bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-300 shadow-sm'
@@ -127,7 +127,7 @@ const CountBlocks = () => {
                             ▼
                         </button>
                     </div>
-                    <div className='w-[100%] flex flex-col justify-center items-center gap-2'>
+                    <div className='w-[30%] flex flex-col justify-center items-center gap-2'>
                         <button 
                             className='w-6 h-6 flex items-center justify-center rounded-md bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-300 shadow-sm'
                             onClick={incrementTens}
@@ -140,7 +140,7 @@ const CountBlocks = () => {
                             readOnly
                             tabIndex={-1}
                             value={tens}
-                            className='w-[90%] md:w-28 lg:w-32 text-center border-2 border-red-400 rounded-lg p-2 focus:outline-none shadow-sm select-none pointer-events-none text-gray-800' 
+                            className='w-[90%] text-center border-2 border-red-400 rounded-lg p-2 focus:outline-none shadow-sm select-none pointer-events-none text-gray-800' 
                         />
                         <button 
                             className='w-6 h-6 flex items-center justify-center rounded-md bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-300 shadow-sm'
@@ -150,7 +150,7 @@ const CountBlocks = () => {
                             ▼
                         </button>
                     </div>
-                    <div className='w-[100%] flex flex-col justify-center items-center gap-2'>
+                    <div className='w-[30%] flex flex-col justify-center items-center gap-2'>
                         <button 
                             className='w-6 h-6 flex items-center justify-center rounded-md bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-300 shadow-sm'
                             onClick={incrementOnes}
@@ -163,7 +163,7 @@ const CountBlocks = () => {
                             readOnly
                             tabIndex={-1}
                             value={ones}
-                            className='w-[90%] md:w-28 lg:w-32 text-center border-2 border-blue-400 rounded-lg p-2 focus:outline-none shadow-sm select-none pointer-events-none text-gray-800' 
+                            className='w-[90%] text-center border-2 border-blue-400 rounded-lg p-2 focus:outline-none shadow-sm select-none pointer-events-none text-gray-800' 
                         />
                         <button 
                             className='w-6 h-6 flex items-center justify-center rounded-md bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-300 shadow-sm'
