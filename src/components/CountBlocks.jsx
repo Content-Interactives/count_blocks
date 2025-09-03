@@ -18,6 +18,7 @@ const CountBlocks = () => {
 
 	// Reveal result state
 	const [showResult, setShowResult] = useState(false);
+	const [hideInputs, setHideInputs] = useState(false);
 
 	const incrementHundreds = () => {
 		setHundreds(prev => Math.min(900, prev + 100));
@@ -53,7 +54,7 @@ const CountBlocks = () => {
 		setAnswerOnes(randomOnes);
 	}, []);
 
-	// After showing result, wait 3s then randomize a new answer and hide result
+	// After showing result, wait 3s then randomize a new answer and show inputs again
 	useEffect(() => {
 		if (!showResult) return;
 		const timeoutId = setTimeout(() => {
@@ -61,6 +62,7 @@ const CountBlocks = () => {
 			setAnswerHundreds(Math.floor(Math.random() * 10));
 			setAnswerTens(Math.floor(Math.random() * 10));
 			setAnswerOnes(Math.floor(Math.random() * 10));
+			setHideInputs(false);
 		}, 3000);
 		return () => clearTimeout(timeoutId);
 	}, [showResult]);
@@ -72,7 +74,8 @@ const CountBlocks = () => {
 		const userTotal = hundreds + tens + ones;
 		if (userTotal === totalBlocks) {
 			confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
-			setTimeout(() => setShowResult(true), 150);
+			setHideInputs(true);
+			setTimeout(() => setShowResult(true), 300); // fade in answer after inputs fade out
 		} else {
 			const btn = checkButtonRef.current;
 			if (!btn) return;
@@ -102,7 +105,7 @@ const CountBlocks = () => {
             </div>
 
             {/* Inputs */}
-            <div className={`absolute bottom-[1%] flex flex-col justify-center items-center w-[100%] gap-4 p-5 pb-2 pt-2 transition-opacity duration-300 ${showResult ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <div className={`absolute bottom-[1%] flex flex-col justify-center items-center w-[100%] gap-4 p-5 pb-2 pt-2 transition-opacity duration-300 ${hideInputs ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                 <div className='flex flex-row justify-center items-center gap-4'>
                     <div className='w-[30%] flex flex-col justify-center items-center gap-2'>
                         <button 
@@ -176,22 +179,22 @@ const CountBlocks = () => {
                 </div>
 
                 {/* Check Answer Button */}
-                    <div className={`flex justify-center w-full transition-opacity duration-300 ${showResult ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                    <div className={`flex justify-center w-full transition-opacity duration-300 ${hideInputs ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                         <button ref={checkButtonRef} onClick={handleCheck} className='w-24 md:w-28 lg:w-32 text-center border-2 border-orange-400 bg-yellow-100 hover:bg-orange-200 text-orange-600 rounded-lg p-1 focus:outline-none shadow-sm placeholder-black'>Check!</button>
                     </div>
 
-                    {showResult && (
-                        <div className='absolute bottom-[16%] flex justify-center items-center w-full p-4'>
-                            <div className='text-3xl md:text-4xl lg:text-5xl font-extrabold text-green-600'>
-                                {answerHundreds * 100 + answerTens * 10 + answerOnes}
-                            </div>
-                        </div>
-                    )}
             </div>
 
-        </Container>
-)
-};
-
-
-export default CountBlocks;
+			{/* Green Answer Overlay - fades independently after inputs are hidden */}
+			<div className={`absolute bottom-[16%] flex justify-center items-center w-full p-4 transition-opacity duration-300 ${showResult ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+				<div className='text-3xl md:text-4xl lg:text-5xl font-extrabold text-green-600'>
+					{answerHundreds * 100 + answerTens * 10 + answerOnes}
+				</div>
+			</div>
+ 
+ 		</Container>
+ )
+ };
+ 
+ 
+ export default CountBlocks;
